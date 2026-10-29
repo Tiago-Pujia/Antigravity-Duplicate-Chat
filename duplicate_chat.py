@@ -122,7 +122,7 @@ Antigravity Duplicate Chat
 Herramienta CLI para ramificar y clonar chats de Google Antigravity en vivo.
 
 Uso:
-  duplicate-chat [OPCIONES] "<Nombre del Chat>" ["<Nombre de la Copia>"]
+  duplicate-chat-antigravity [OPCIONES] "<Nombre del Chat>" ["<Nombre de la Copia>"]
 
 Opciones:
   -l, --list    Muestra todos los chats disponibles en Antigravity.
@@ -130,13 +130,13 @@ Opciones:
 
 Ejemplos:
   1) Duplicar con sufijo '(Copia)':
-     duplicate-chat "Leer Contidos De Carpeta"
+     duplicate-chat-antigravity "Analisis Inicial de Codigo"
 
   2) Duplicar asignando un título nuevo:
-     duplicate-chat "Leer Contidos De Carpeta" "Estudio - Modulo 2"
+     duplicate-chat-antigravity "Analisis Inicial de Codigo" "Modulo 2 - Refactor"
 
   3) Listar chats disponibles:
-     duplicate-chat --list
+     duplicate-chat-antigravity --list
 """)
 
 

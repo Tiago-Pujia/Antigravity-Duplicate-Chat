@@ -37,7 +37,7 @@ chmod +x install.sh
 ./install.sh
 ```
 
-El script otorgará permisos de ejecución y creará un enlace simbólico en `~/.local/bin/duplicate-chat`, dejando el comando accesible globalmente en cualquier terminal del usuario.
+El script otorgará permisos de ejecución y creará un enlace simbólico en `~/.local/bin/duplicate-chat-antigravity`, dejando el comando accesible globalmente en cualquier terminal del usuario.
 
 ---
 
@@ -47,10 +47,10 @@ El script otorgará permisos de ejecución y creará un enlace simbólico en `~/
 Crea una copia idéntica agregando el sufijo `(Copia)`:
 
 ```bash
-duplicate-chat "Analisis Inicial de Codigo"
+duplicate-chat-antigravity "Analisis Inicial de Codigo"
 ```
 
-> **Nota:** La búsqueda admite coincidencias parciales. Si el chat se titula *"Analisis Inicial de Codigo y Dependencias"*, basta con ingresar `duplicate-chat "Analisis Inicial"`.
+> **Nota:** La búsqueda admite coincidencias parciales. Si el chat se titula *"Analisis Inicial de Codigo y Dependencias"*, basta con ingresar `duplicate-chat-antigravity "Analisis Inicial"`.
 
 ---
 
@@ -58,7 +58,7 @@ duplicate-chat "Analisis Inicial de Codigo"
 Permite definir un nuevo título para organizar distintas líneas de trabajo:
 
 ```bash
-duplicate-chat "Analisis Inicial de Codigo" "Refactor - Modulo de Autenticacion"
+duplicate-chat-antigravity "Analisis Inicial de Codigo" "Refactor - Modulo de Autenticacion"
 ```
 
 ---
@@ -67,16 +67,16 @@ duplicate-chat "Analisis Inicial de Codigo" "Refactor - Modulo de Autenticacion"
 Para consultar los títulos de los chats registrados actualmente en el entorno:
 
 ```bash
-duplicate-chat --list
+duplicate-chat-antigravity --list
 # o de forma abreviada:
-duplicate-chat -l
+duplicate-chat-antigravity -l
 ```
 
 ---
 
 ### 4. Consultar ayuda
 ```bash
-duplicate-chat --help
+duplicate-chat-antigravity --help
 ```
 
 ---
@@ -89,7 +89,7 @@ Antigravity opera mediante una arquitectura cliente-servidor local:
 [ Electron / Frontend ]  <--->  [ language_server (gRPC / Connect) ]  <--->  [ SQLite / Almacenamiento local ]
                                               ▲
                                               │ (Llamada Connect RPC)
-                                    [ duplicate-chat ]
+                                [ duplicate-chat-antigravity ]
 ```
 
 * **Detección de instancia:** El script examina los procesos locales para identificar la instancia en ejecución de `language_server`, obteniendo dinámicamente su puerto HTTPS activo y el token de seguridad CSRF correspondiente.
@@ -115,4 +115,4 @@ chmod +x uninstall.sh
 ./uninstall.sh
 ```
 
-Esto elimina el enlace simbólico en `~/.local/bin/duplicate-chat` sin alterar el repositorio ni las conversaciones creadas.
+Esto elimina el enlace simbólico en `~/.local/bin/duplicate-chat-antigravity` sin alterar el repositorio ni las conversaciones creadas.
