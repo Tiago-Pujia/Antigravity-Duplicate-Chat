@@ -1,98 +1,116 @@
-# Antigravity Duplicate Chat 🚀
+# Antigravity Duplicate Chat
 
-> Herramienta CLI para duplicar y ramificar (*fork*) conversaciones de **Google Antigravity** en vivo sin perder contexto ni tener que solicitarle al asistente que vuelva a leer todos los contenidos del proyecto.
-
----
-
-## 🎯 ¿Qué problema resuelve?
-
-En **Google Antigravity**, cuando se trabaja con proyectos grandes (código, apuntes, libros o guías de estudio), el primer mensaje suele dedicarse a que el agente lea e indexe carpetas enteras.
-
-La interfaz gráfica de Antigravity **no incluye actualmente un botón nativo para duplicar o clonar un chat**. Si quieres comenzar una consulta nueva sobre otro tema manteniendo todo el material leído, normalmente tendrías que:
-1. Seguir en el mismo chat (mezclando temas y alargando excesivamente el historial).
-2. Abrir un chat nuevo y pedirle que vuelva a escanear toda la carpeta desde cero (lento y con alto consumo de tokens).
-
-**`duplicate-chat`** soluciona esto permitiéndote clonar cualquier conversación existente al instante. El nuevo chat ramificado aparece en tu barra lateral manteniendo intactos todos los pasos previos, conclusiones y archivos analizados.
+Herramienta de línea de comandos para ramificar y duplicar conversaciones en **Google Antigravity** en tiempo real, manteniendo el historial completo de análisis sin necesidad de volver a leer ni indexar los contenidos del proyecto.
 
 ---
 
-## ⚙️ ¿Cómo funciona por detrás?
+## 📌 Motivación
 
-1. **Detección dinámica:** El script localiza el proceso activo del motor de Antigravity (`language_server`) y extrae dinámicamente su puerto HTTPS local y el token de seguridad CSRF (`X-Codeium-Csrf-Token`).
-2. **Llamada RPC nativa (`ForkConversation`):** Se comunica con el endpoint gRPC/Connect interno de Antigravity (`/exa.language_server_pb.LanguageServerService/ForkConversation`), el mismo mecanismo que utiliza internamente la plataforma para ramificar agentes y tareas.
-3. **Actualización de metadatos (`UpdateConversationAnnotations`):** Le asigna el título deseado de forma limpia en el registro de sesiones.
-4. **Reflejo en vivo:** Al interactuar con el servicio en memoria y no solo con los archivos SQLite en disco, el nuevo chat aparece **al instante en la barra lateral**, sin necesidad de reiniciar la app ni recargarla con atajos.
+Al trabajar con asistentes agentic en proyectos medianos o grandes, el inicio de una conversación suele implicar un proceso intensivo de lectura e indexación del espacio de trabajo (código fuente, documentación, dependencias).
+
+Cuando se desea abordar una nueva tarea, investigar una hipótesis alternativa o probar una solución diferente a partir de ese mismo contexto, comenzar un chat nuevo obliga al modelo a escanear nuevamente todo el repositorio. Como la interfaz de usuario de Antigravity no cuenta con una opción visual para duplicar hilos, esta herramienta cubre ese vacío permitiendo realizar un *fork* del hilo en un solo comando.
 
 ---
 
-## 📦 Instalación
+## ✨ Características
 
-Solo clona o navega a este repositorio y ejecuta el script de instalación:
+* **Ramificación en vivo:** Se conecta directamente con el motor en memoria de Antigravity (`language_server`). La conversación duplicada aparece de inmediato en la barra lateral sin necesidad de recargar la ventana ni reiniciar la aplicación.
+* **Preservación total de contexto:** Clona los pasos de ejecución, archivos analizados, artefactos generados y metadatos de la sesión hasta el último punto alcanzado.
+* **Búsqueda flexible:** Permite ubicar la conversación por nombre exacto, coincidencia parcial o identificador único.
+* **Sin dependencias externas:** Desarrollado utilizando exclusivamente la biblioteca estándar de Python 3.
+
+---
+
+## 🚀 Instalación
+
+1. Clonar el repositorio y acceder a la carpeta:
 
 ```bash
-cd /home/tiago/Proyectos/Antigravity-Duplicate-Chat
+git clone https://github.com/usuario/antigravity-duplicate-chat.git
+cd antigravity-duplicate-chat
+```
+
+2. Ejecutar el script instalador:
+
+```bash
 ./install.sh
 ```
 
-El script de instalación:
-1. Da permisos de ejecución al script Python.
-2. Crea un enlace simbólico en `~/.local/bin/duplicate-chat`.
-3. Te asegura disponibilidad global del comando en cualquier terminal de tu sistema.
+El script otorgará permisos de ejecución y creará un enlace simbólico en `~/.local/bin/duplicate-chat`, dejando el comando accesible globalmente en cualquier terminal del usuario.
 
 ---
 
-## 💡 Guía de Uso
+## 💻 Ejemplos de Uso
 
-### 1. Duplicar con nombre automático `(Copia)`
-Pasa el nombre o parte del nombre del chat que quieres duplicar:
-
-```bash
-duplicate-chat "Leer Contidos De Carpeta"
-```
-
-Aparecerá inmediatamente en tu barra lateral:
-```text
-📁 Estadistica Aplicada
-  ├── Leer Contidos De Carpeta (Copia)  <-- (Nuevo chat duplicado)
-  └── Leer Contidos De Carpeta
-```
-
-### 2. Duplicar asignando un nombre personalizado
-Puedes especificar un segundo argumento entre comillas con el nuevo título:
+### 1. Duplicación automática
+Crea una copia idéntica agregando el sufijo `(Copia)`:
 
 ```bash
-duplicate-chat "Leer Contidos De Carpeta" "Estudio - Modulo 2 ANOVA"
+duplicate-chat "Analisis Inicial de Codigo"
 ```
 
-### 3. Listar todos los chats disponibles
-Si no recuerdas cómo se llamaba exactamente un chat, puedes listar todos los chats registrados:
+> **Nota:** La búsqueda admite coincidencias parciales. Si el chat se titula *"Analisis Inicial de Codigo y Dependencias"*, basta con ingresar `duplicate-chat "Analisis Inicial"`.
+
+---
+
+### 2. Duplicación con nombre personalizado
+Permite definir un nuevo título para organizar distintas líneas de trabajo:
+
+```bash
+duplicate-chat "Analisis Inicial de Codigo" "Refactor - Modulo de Autenticacion"
+```
+
+---
+
+### 3. Listar conversaciones existentes
+Para consultar los títulos de los chats registrados actualmente en el entorno:
 
 ```bash
 duplicate-chat --list
-# o también:
+# o de forma abreviada:
 duplicate-chat -l
 ```
 
-### 4. Ver ayuda en la terminal
+---
+
+### 4. Consultar ayuda
 ```bash
 duplicate-chat --help
 ```
 
 ---
 
-## 🛠️ Requisitos
+## 🔬 Detalles Técnicos
+
+Antigravity opera mediante una arquitectura cliente-servidor local:
+
+```
+[ Electron / Frontend ]  <--->  [ language_server (gRPC / Connect) ]  <--->  [ SQLite / Almacenamiento local ]
+                                              ▲
+                                              │ (Llamada Connect RPC)
+                                    [ duplicate-chat ]
+```
+
+* **Detección de instancia:** El script examina los procesos locales para identificar la instancia en ejecución de `language_server`, obteniendo dinámicamente su puerto HTTPS activo y el token de seguridad CSRF correspondiente.
+* **Llamada a `ForkConversation`:** Envía una solicitud HTTPS al endpoint Connect RPC `/exa.language_server_pb.LanguageServerService/ForkConversation` pasando el identificador de la conversación de origen (`source_cascade_id`) y el índice del último paso alcanzado (`fork_at_step_index`).
+* **Sincronización de título:** Mediante `/exa.language_server_pb.LanguageServerService/UpdateConversationAnnotations`, actualiza el nombre del nuevo chat, lo que dispara un evento reactivo que refresca la barra lateral del cliente en tiempo real.
+
+---
+
+## 📋 Requisitos del Sistema
 
 * **Sistema Operativo:** Linux
-* **Python:** 3.8 o superior (utiliza solo bibliotecas estándar: `urllib`, `sqlite3`, `ssl`, `json`, `re`)
-* **Google Antigravity:** Debe estar abierto y en ejecución al momento de invocar el comando para que pueda conectarse a su API en vivo.
+* **Python:** 3.8 o superior
+* **Google Antigravity:** Debe encontrarse en ejecución al momento de invocar el comando para permitir la comunicación con su servicio local.
 
 ---
 
 ## 🗑️ Desinstalación
 
-Si deseas remover el comando del sistema:
+Para retirar el comando del sistema:
 
 ```bash
 ./uninstall.sh
 ```
-*(Esto solo elimina el enlace en `~/.local/bin/duplicate-chat`; tus chats duplicados y el repositorio se mantendrán intactos).*
+
+Esto elimina el enlace simbólico en `~/.local/bin/duplicate-chat` sin alterar el repositorio ni las conversaciones creadas.
