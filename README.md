@@ -30,9 +30,10 @@ git clone https://github.com/usuario/antigravity-duplicate-chat.git
 cd antigravity-duplicate-chat
 ```
 
-2. Ejecutar el script instalador:
+2. Otorgar permisos de ejecución y ejecutar el script instalador:
 
 ```bash
+chmod +x install.sh
 ./install.sh
 ```
 
@@ -110,6 +111,7 @@ Antigravity opera mediante una arquitectura cliente-servidor local:
 Para retirar el comando del sistema:
 
 ```bash
+chmod +x uninstall.sh
 ./uninstall.sh
 ```
 

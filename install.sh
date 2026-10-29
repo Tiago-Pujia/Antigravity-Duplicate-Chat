@@ -8,8 +8,8 @@ SYMLINK_PATH="$BIN_DIR/duplicate-chat"
 
 echo "=== Instalando Antigravity Duplicate Chat ==="
 
-# 1. Asegurar permisos de ejecución en el script
-chmod +x "$TARGET_SCRIPT"
+# 1. Asegurar permisos de ejecución en los scripts
+chmod +x "$TARGET_SCRIPT" "$SCRIPT_DIR/uninstall.sh"
 
 # 2. Crear ~/.local/bin si no existe
 mkdir -p "$BIN_DIR"
