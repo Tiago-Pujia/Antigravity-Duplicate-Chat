@@ -1,6 +1,6 @@
 # Antigravity Duplicate Chat
 
-Herramienta de línea de comandos para ramificar y duplicar conversaciones en **Google Antigravity** en tiempo real, manteniendo el historial completo de análisis sin necesidad de volver a leer ni indexar los contenidos del proyecto.
+Herramienta de línea de comandos para ramificar y duplicar conversaciones en **Google Antigravity**, manteniendo el historial completo de análisis sin necesidad de volver a leer ni indexar los contenidos del proyecto.
 
 ---
 
@@ -36,8 +36,6 @@ cd antigravity-duplicate-chat
 chmod +x install.sh
 ./install.sh
 ```
-
-El script otorgará permisos de ejecución y creará un enlace simbólico en `~/.local/bin/duplicate-chat-antigravity`, dejando el comando accesible globalmente en cualquier terminal del usuario.
 
 ---
 
@@ -81,23 +79,6 @@ duplicate-chat-antigravity --help
 
 ---
 
-## 🔬 Detalles Técnicos
-
-Antigravity opera mediante una arquitectura cliente-servidor local:
-
-```
-[ Electron / Frontend ]  <--->  [ language_server (gRPC / Connect) ]  <--->  [ SQLite / Almacenamiento local ]
-                                              ▲
-                                              │ (Llamada Connect RPC)
-                                [ duplicate-chat-antigravity ]
-```
-
-* **Detección de instancia:** El script examina los procesos locales para identificar la instancia en ejecución de `language_server`, obteniendo dinámicamente su puerto HTTPS activo y el token de seguridad CSRF correspondiente.
-* **Llamada a `ForkConversation`:** Envía una solicitud HTTPS al endpoint Connect RPC `/exa.language_server_pb.LanguageServerService/ForkConversation` pasando el identificador de la conversación de origen (`source_cascade_id`) y el índice del último paso alcanzado (`fork_at_step_index`).
-* **Sincronización de título:** Mediante `/exa.language_server_pb.LanguageServerService/UpdateConversationAnnotations`, actualiza el nombre del nuevo chat, lo que dispara un evento reactivo que refresca la barra lateral del cliente en tiempo real.
-
----
-
 ## 📋 Requisitos del Sistema
 
 * **Sistema Operativo:** Linux
@@ -114,5 +95,3 @@ Para retirar el comando del sistema:
 chmod +x uninstall.sh
 ./uninstall.sh
 ```
-
-Esto elimina el enlace simbólico en `~/.local/bin/duplicate-chat-antigravity` sin alterar el repositorio ni las conversaciones creadas.
